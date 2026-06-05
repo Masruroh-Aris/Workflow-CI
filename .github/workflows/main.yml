@@ -40,7 +40,8 @@ jobs:
       run: |
         cd MLProject
         USERNAME=$(echo "${{ secrets.DOCKER_USERNAME }}" | tr '[:upper:]' '[:lower:]')
-        mlflow models build-docker -m saved_model -n $USERNAME/acne-model:latest
+        mlflow models generate-dockerfile -m saved_model -d build_dir
+        docker build -t $USERNAME/acne-model:latest build_dir
 
     - name: Push Image ke Docker Hub
       run: |
