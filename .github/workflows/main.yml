@@ -39,10 +39,10 @@ jobs:
     - name: MLflow Build Docker Image
       run: |
         cd MLProject
-        # Perintah krusial syarat Advanced Dicoding
-        mlflow models build-docker -m saved_model -n ${{ secrets.DOCKER_USERNAME }}/acne-model:latest
+        USERNAME=$(echo "${{ secrets.DOCKER_USERNAME }}" | tr '[:upper:]' '[:lower:]')
+        mlflow models build-docker -m saved_model -n $USERNAME/acne-model:latest
 
     - name: Push Image ke Docker Hub
       run: |
-        # Mengunggah kontainer yang sudah jadi ke akun Docker Hub Anda
-        docker push ${{ secrets.DOCKER_USERNAME }}/acne-model:latest
+       USERNAME=$(echo "${{ secrets.DOCKER_USERNAME }}" | tr '[:upper:]' '[:lower:]')
+       docker push $USERNAME/acne-model:latest
